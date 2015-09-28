@@ -459,7 +459,7 @@ class WordList():
         print "Searching for: " + self.search_term
         docs = list()
         depth = 5   # max depths to check if documents haven't been found
-        min_docs = 30
+        min_docs = 20
         max_docs = 100
 
         #feedzilla = FeedzillaSource()
@@ -638,7 +638,7 @@ class WordList():
         final_words = final_words + list(numpy.random.choice([ x[0] for x in v ], size=(len(v)/3), p=[ x[1] for x in v ], replace=False))
 
         j = prob_sort_words(sorted_adjs)
-        final_words = final_words + list(numpy.random.choice([ x[0] for x in j ], size=(len(j)/3), p=[ x[1] for x in j ], replace=False))
+        final_words = final_words + list(numpy.random.choice([ x[0] for x in j ], size=(len(j)/4), p=[ x[1] for x in j ], replace=False))
 
         entities = list(set(entities))
         if len(titles) > 0:

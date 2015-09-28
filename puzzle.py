@@ -568,7 +568,8 @@ class Puzzle:
         with open('clues.txt', 'rU') as fin:
             for line in fin:
                 temp = line.split('\t')
-                nyt_clues[temp[1]].append(temp[0])
+                if "-Across" not in temp[0] and "-Down" not in temp[0]:
+                    nyt_clues[temp[1]].append(temp[0])
         
         
         # should later also use docset from wordsource somehow
@@ -576,8 +577,7 @@ class Puzzle:
         for w in words:
             print "generating hints for " + w + "..."
             if nyt_clues.has_key(w.upper()):
-                print "NYT clue"
-                hints[w] += [ ('NYT', nyt_clues[w]) ]
+                hints[w] += [ ('NYT', nyt_clues[w.upper()]) ]
             
             synsets = wordnet.synsets(w)
             if len(synsets) > 0:
@@ -614,10 +614,15 @@ class Puzzle:
             print "selecting hint for " + str(k) + "..."
             # if there's a NYT list then randomly select from that
             nyt_hints = [ x for x in v if x[0] == 'NYT' ]
+            nyt_hint_set = False
             if (len(nyt_hints) > 0):
-                final_hints[k] = numpy.random.choice(nyt_hints[k])
-                print "nyt hint: " + final_hints[k]
-            else:
+                nyt_hints = nyt_hints[0]
+                if len(nyt_hints[1]) > 0:
+                    final_hints[k] = numpy.random.choice(nyt_hints[1])
+                    print "nyt hint: " + final_hints[k]
+                    nyt_hint_set = True
+                
+            if not nyt_hint_set:
                 if len(v) == 0:
                     # don't include this word in the returned dictionary
                     pass

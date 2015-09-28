@@ -615,7 +615,7 @@ class Puzzle:
             # if there's a NYT list then randomly select from that
             nyt_hints = [ x for x in v if x[0] == 'NYT' ]
             if (len(nyt_hints) > 0):
-                final_hints[k] = numpy.random.choice(nyt_hints[1])
+                final_hints[k] = numpy.random.choice(nyt_hints[k])
                 print "nyt hint: " + final_hints[k]
             else:
                 if len(v) == 0:
